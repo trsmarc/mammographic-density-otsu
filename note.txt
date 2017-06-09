@@ -1,0 +1,22 @@
+
+a) Breast Region Segmentation
+
+* Step1: * Calculate image histogram and find the peak of histogram
+
+* Step2: * Use peak of histogram to binarize image
+
+* Step3: * Find max region (sum of intensity inside a region) as the breast region
+
+
+
+b) Gland Tissue Segmentation
+
+* Step1: * Otsu thresholding for gland tissue segmentation
+
+* Step2: * Find glandural tissues' contours and calculate its moment and centroid
+
+* Step3: * Find pectoral muscle
+
+
+
+c) Calculate the mammographic density and image output
