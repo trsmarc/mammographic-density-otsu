@@ -12,7 +12,7 @@ img = cv2.imread('image/MLO_test.bmp')
 
 img2 = img  # do something with img2
 
-kernel = np.ones((5,5),np.uint8)
+kernel = np.ones((5, 5), np.uint8)
 closing = cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
 
 plt.subplot(row, column, 1)
