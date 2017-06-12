@@ -11,12 +11,12 @@ a) Breast Region Segmentation
 
 b) Gland Tissue Segmentation
 
-* Step1: * Otsu thresholding for gland tissue segmentation
+* Step1: * Otsu thresholds for gland tissue segmentation
 
-* Step2: * Find glandural tissues' contours and calculate its moment and centroid
+* Step2: * Find glandular tissues' contours and calculate its moment and centroid
 
 * Step3: * Find pectoral muscle
 
 
 
-c) Calculate the mammographic density and image output
+c) Calculate the mammography density and image output
