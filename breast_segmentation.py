@@ -45,7 +45,7 @@ def breast_display(img):
 
 
 def get_histogram_max_value(img):
-    hist, bins = np.histogram(img.flatten(), 256, [0, 256])
+    hist, bins = np.histogram(img.flatten(), 256, [0, 255])
     return hist
 
 
