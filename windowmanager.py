@@ -18,7 +18,7 @@ def create_window(img, result, cdf_normalized):
 
     plt.subplot(row, column, 2)
     plt.imshow(result)  # expect true color
-    plt.title('Segmented (Watershed)')
+    plt.title('Threshold')
     plt.xlabel('Output')
 
     # show image histogram
@@ -26,7 +26,7 @@ def create_window(img, result, cdf_normalized):
     # plt.hist(img.ravel(), 256, [0, 256])
 
     # ----------------------
-    # Show histogram chart
+    # Show histogram
     # ----------------------
     plt.subplot(row, column, 3).plot(cdf_normalized, color='b')
     plt.hist(img.flatten(), 256, [0, 256], color='r')

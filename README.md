@@ -7,6 +7,7 @@ Related Document
 Resource
 + [OpenCV with Python](https://opencv-python-tutroals.readthedocs.io/en/latest/)
 + [Matplot](http://matplotlib.org/api/pyplot_api.html)
++ [Otsu Thresholding Explained](http://www.labbookpages.co.uk/software/imgProc/otsuThreshold.html)
 
 Developer
 + [Marktrs](https://github.com/marktrs)
