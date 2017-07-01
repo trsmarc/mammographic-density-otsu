@@ -1,8 +1,12 @@
 import cv2
 import windowmanager as window
 import breast_segmentation as bs
+# ------------------------------------
+#   Mammographic density measurement
+# ------------------------------------
 
 origin_img = 'image/MLO_test.bmp'
+# origin_img = 'image/05.png'
 
 img = cv2.imread(origin_img)
 img2 = bs.breast_display(img)
