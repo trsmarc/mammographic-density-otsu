@@ -9,14 +9,28 @@ import numpy as np
 
 def breast_display(img):
     """ Respresent breast part """
+    # hist = get_histogram_max_value(img)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    hist = get_histogram_max_value(img)
+    ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY)
 
-    blur = cv2.GaussianBlur(gray, (5, 5), 0)
-    ret, thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    # contour breast part
+    im2, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 
-    return thresh
+    contour_area_list = [len(contours)]
+    count = 0
+    for i in contours:
+        area = cv2.contourArea(i)
+        contour_area_list.append(area)
+        print "contour index ", count, " area = ", area
+        count += 1
+
+    max_area_index = contour_area_list.index(max(contour_area_list)) - 1
+    print max(contour_area_list)
+    print max_area_index
+    cv2.drawContours(img, contours, max_area_index, (255, 0, 0), 3)
+
+    return im2
 
 
 def get_histogram_max_value(img):
