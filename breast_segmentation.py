@@ -67,7 +67,7 @@ def glandular_tissue_display(img, t):
     # # Get max area and draw contour on it.
     # max_area_index = contour_area_list.index(max(contour_area_list)) - 1
     # cv2.drawContours(img, contours, max_area_index, (255, 0, 0), 3)
-    cv2.drawContours(img, contours, -1, (255, 0, 0), 3)  # for testing
+    # cv2.drawContours(img, contours, -1, (255, 0, 0), 3)  # for testing
 
     print "Number of contour detected ->", len(contours)
     print "Size of max contour = ", max(contour_area_list)
@@ -97,32 +97,46 @@ def image_histogram(img):
 
 
 def otsu_threshold_value(img):
-
-    # Find normalized_histogram, and its cumulative distribution function
+    # find normalized_histogram, and its cumulative distribution function
     hist = cv2.calcHist([img], [0], None, [256], [0, 256])
-    hist_norm = hist.ravel() / hist.max()
-    Q = hist_norm.cumsum()
-    bins = np.arange(256)
+    hist_norm = hist.ravel() / hist.max()  # give hist.max = 1
+    Q = hist_norm.cumsum()  # Return the cumulative sum of the elements along the given axis.
+
+    bins = np.arange(256)  # Create set of number 0-255
     fn_min = np.inf
+
     thresh = -1
+    all_pixel = np.sum(hist)
 
     for i in xrange(1, 256):
 
-        p1, p2 = np.hsplit(hist_norm, [i])  # probabilities
-        q1, q2 = Q[i], Q[255] - Q[i]  # cum sum of classes
+        p1, p2 = np.hsplit(hist_norm, [i])  # probabilities # p1 = amount of pixel in background
+
+        q1 = Q[i]
+        q2 = Q[255] - Q[i]  # cum sum of classes
         b1, b2 = np.hsplit(bins, [i])  # weights
 
-        # finding means and variances
-        m1 = np.sum(p1 * b1) / q1
-        m2 = np.sum(p2 * b2) / q2
-        v1 = np.sum(((b1 - m1) ** 2) * p1) / q1
-        v2 = np.sum(((b2 - m2) ** 2) * p2) / q2
+        if q2 > 0:
 
-        # calculates the minimization function
-        fn = v1 * q1 + v2 * q2
+            # finding weight
+            w1 = q1 / all_pixel
+            w2 = q2 / all_pixel
 
-        if fn < fn_min:
-            fn_min = fn
-            thresh = i
+            # finding means
+            m1 = np.sum(p1 * b1) / w1
+            m2 = np.sum(p2 * b2) / w2
+
+            # finding variances
+            v1 = np.sum(((b1 - m1) ** 2) * p1) / w1
+            v2 = np.sum(((b2 - m2) ** 2) * p2) / w1
+
+            # calculates the minimization function
+            # fn = (v1 * w1) + (v2 * w2)
+            fn = v1 * q1 + v2 * q2
+            # print fn
+
+            if fn < fn_min:
+                fn_min = fn
+                thresh = i
 
     return thresh

@@ -11,7 +11,9 @@ information = []
 '''Open image'''
 img_name = raw_input("Please select image -> ")
 # origin_img = 'image/MLO_test.bmp'
+# origin_img = 'image/01.png'
 origin_img = 'image/' + img_name
+
 
 '''Threshold & Contour'''
 img = cv2.imread(origin_img)

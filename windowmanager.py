@@ -14,6 +14,7 @@ def create_window(img, result, cdf_normalized, information):
     """ open window then separate image for comparison and add their label"""
     fig = plt.figure()
     fig.suptitle('Mammographic density measurement', fontsize=14, fontweight='bold')
+    fig.canvas.set_window_title('Mammograpic density measurement - Traisak Traisenee')
 
     '''Show original image'''
     plt.subplot(gs[:, 0])
@@ -49,7 +50,8 @@ def create_window(img, result, cdf_normalized, information):
     plt.subplot(gs[1:, 2]).plot(cdf_normalized, color='b')
     plt.hist(img.flatten(), 256, [0, 256], color='r')
     plt.xlim([0, 256])
-    plt.ylim([-50, 20000])
+    plt.ylim([-50, 150000])
+    plt.yticks([])
     plt.legend(('cdf', 'histogram'), loc='upper right')
 
     '''Maximize window'''
