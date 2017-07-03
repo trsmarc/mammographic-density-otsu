@@ -33,12 +33,14 @@ def create_window(img, result, cdf_normalized, information):
 
     breast = 'Breast area = ' + str(information[0][1])
     tissue = 'Tissue area = ' + str(information[1][1])
+    t_value = 'Threshold = ' + str(information[3][1])
     density = "%10.3f" % information[2][1]
     density += " %"
 
-    ax.text(0.05, 0.8, breast, fontsize=9)
-    ax.text(0.05, 0.6, tissue, fontsize=9)
-    ax.text(0.05, 0.4, 'Density =' + density, fontsize=9)
+    ax.text(0.05, 0.8, t_value, fontsize=9)
+    ax.text(0.05, 0.6, breast, fontsize=9)
+    ax.text(0.05, 0.4, tissue, fontsize=9)
+    ax.text(0.05, 0.2, 'Density =' + density, fontsize=9)
     plt.xticks([])
     plt.yticks([])
     # plt.axis('off') # Remove frame

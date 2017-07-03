@@ -43,13 +43,13 @@ def breast_display(img):
     return res, max(contour_area_list)
 
 
-def glandular_tissue_display(img):
+def glandular_tissue_display(img, t):
     """ Respresent glandular part """
     # hist = get_histogram_max_value(img)
 
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # thresh = cv2.adaptiveThreshold(gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 11, 2)
-    ret, thresh = cv2.threshold(gray, 90, 255, cv2.THRESH_BINARY)
+    ret, thresh = cv2.threshold(gray, t, 255, cv2.THRESH_BINARY)
 
     # Contour glandular part
     im2, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)
@@ -70,7 +70,7 @@ def glandular_tissue_display(img):
     cv2.drawContours(img, contours, -1, (255, 0, 0), 3)  # for testing
 
     print "Number of contour detected ->", len(contours)
-    # print "Size of max contour = ", max(contour_area_list)
+    print "Size of max contour = ", max(contour_area_list)
     # print "Index of max region = ", max_area_index
 
     # # Making mask to extract image to new image
@@ -94,3 +94,35 @@ def image_histogram(img):
     cdf = hist.cumsum()
     cdf_normalized = cdf * hist.max() / cdf.max()
     return cdf_normalized
+
+
+def otsu_threshold_value(img):
+
+    # Find normalized_histogram, and its cumulative distribution function
+    hist = cv2.calcHist([img], [0], None, [256], [0, 256])
+    hist_norm = hist.ravel() / hist.max()
+    Q = hist_norm.cumsum()
+    bins = np.arange(256)
+    fn_min = np.inf
+    thresh = -1
+
+    for i in xrange(1, 256):
+
+        p1, p2 = np.hsplit(hist_norm, [i])  # probabilities
+        q1, q2 = Q[i], Q[255] - Q[i]  # cum sum of classes
+        b1, b2 = np.hsplit(bins, [i])  # weights
+
+        # finding means and variances
+        m1 = np.sum(p1 * b1) / q1
+        m2 = np.sum(p2 * b2) / q2
+        v1 = np.sum(((b1 - m1) ** 2) * p1) / q1
+        v2 = np.sum(((b2 - m2) ** 2) * p2) / q2
+
+        # calculates the minimization function
+        fn = v1 * q1 + v2 * q2
+
+        if fn < fn_min:
+            fn_min = fn
+            thresh = i
+
+    return thresh
