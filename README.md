@@ -1,4 +1,4 @@
-# Mammographic density measurement using OpenCV with python
+# Mammographic density measurement using Otsu's method
 
 Related Document
 + [Measurement algorithm](https://drive.google.com/open?id=0B3AORUsOcrcsbWJTZTZmQWNoU0k)
